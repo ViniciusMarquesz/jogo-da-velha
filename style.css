@@ -5,21 +5,30 @@
 }
 
 body {
-  width: 100vh;
+  width: 100vw; /* Corrigido de 100vh para vw para largura correta */
   height: 100vh;
   background: linear-gradient(
-  90deg, 
-  #0F2027 0%, 
-  #203A43 100%);
+    90deg, 
+    #0F2027 0%, 
+    #203A43 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* Adicional para garantir que não haja rolagem indesejada em dispositivos móveis */
+  box-sizing: border-box; 
+  padding: 0;
+  margin: 0;
 }
 
+/* Ajuste do grid do jogo */
 .game {
   display: grid;
-  width: 100%;
-  height: 100%;
   place-items: center;
   place-content: center;
   grid-template-columns: repeat(3, auto);
+  gap: 0; /* Mantendo as células coladas */
 }
 
 /* Cor do Hover do X */
@@ -43,6 +52,7 @@ body {
   place-items: center;
   place-content: center;
   border: 2px solid #00FFD1;
+  flex-shrink: 0; /* Garante que não encolham */
 }
 
 .cell.x, .cell.circle {
@@ -151,3 +161,61 @@ body {
 p {
   color: white;
 }
+
+/* Tornando o jogo responsivo em telas menores (500px) */
+@media (max-width: 500px) {
+  .cell {
+    width: 70px;
+    height: 70px;
+  }
+
+  /* Ajustando X para 70px */
+  .cell.x::before,
+  .cell.x::after,
+  .game.x .cell:not(.x):not(.circle):hover::after,
+  .game.x .cell:not(.x):not(.circle):hover::before {
+    height: calc(70px * 0.15);
+    width: calc(70px * 0.9);
+  }
+
+  /* Ajustando Circle para 70px */
+  .cell.circle::before,
+  .cell.circle::after,
+  .game.circle .cell:not(.x):not(.circle):hover::after,
+  .game.circle .cell:not(.x):not(.circle):hover::before {
+    height: calc(70px * 0.9);
+    width: calc(70px * 0.9);
+  }
+}
+
+/* Para telas ainda menores, ex: celulares bem pequenos (350px) */
+@media (max-width: 350px) {
+  .cell {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Ajustando X para 50px */
+  .cell.x::before,
+  .cell.x::after,
+  .game.x .cell:not(.x):not(.circle):hover::after,
+  .game.x .cell:not(.x):not(.circle):hover::before {
+    height: calc(50px * 0.15);
+    width: calc(50px * 0.9);
+  }
+
+  /* Ajustando Circle para 50px */
+  .cell.circle::before,
+  .cell.circle::after,
+  .game.circle .cell:not(.x):not(.circle):hover::after,
+  .game.circle .cell:not(.x):not(.circle):hover::before {
+    height: calc(50px * 0.9);
+    width: calc(50px * 0.9);
+  }
+
+  .winning-message-text {
+    font-size: 3rem;
+  }
+}
+
+
